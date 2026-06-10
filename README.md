@@ -144,3 +144,4 @@ railway up
 - **API key nahi hai?** — Mock data se kaam karega, real AI baad mein add karo
 - **WeasyPrint nahi hai?** — HTML file download hogi PDF ki jagah
 - **Supabase nahi hai?** — In-memory storage use hogi (server restart pe data jaayega)
+# resume-builder
