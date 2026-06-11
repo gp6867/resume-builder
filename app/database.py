@@ -1,9 +1,14 @@
+import os
 from sqlalchemy import create_engine, Column, String, DateTime, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from datetime import datetime
 
-DATABASE_URL = "postgresql://resumeai_user:resumeai123@localhost/resumeai"
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://resumeai_user:resumeai123@localhost/resumeai")
+
+# Railway postgres URL fix
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
