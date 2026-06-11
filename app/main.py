@@ -6,12 +6,21 @@ from app.database import init_db
 
 app = FastAPI(title="AI Resume Builder API", version="1.0.0")
 
+origins = [
+    "https://resume-builder-qv5t-gygztry2p-kls-projects-453d419e.vercel.app",
+    "https://resume-builder-qv5t.vercel.app",
+    "https://*.vercel.app",
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=False,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 @app.on_event("startup")
@@ -32,3 +41,7 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
+
+@app.options("/{rest_of_path:path}")
+async def preflight_handler():
+    return {"message": "OK"}
