@@ -8,11 +8,8 @@ app = FastAPI(title="AI Resume Builder API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://resume-builder-qv5t-gygztry2p-kls-projects-453d419e.vercel.app",
-        "http://localhost:3000"
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
