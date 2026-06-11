@@ -29,7 +29,7 @@ export default function Signup() {
   }
 
   const handleGoogle = () => {
-    window.location.href = 'http://localhost:8000/api/auth/google/login'
+    window.location.href = 'https://resume-builder-production-201e.up.railway.app/api/auth/google/login'
   }
 
   const inp: React.CSSProperties = { background: '#1a1a28', border: '1px solid #222230', borderRadius: '8px', color: '#e8e8f0', padding: '12px 14px', fontSize: '15px', width: '100%', outline: 'none' }

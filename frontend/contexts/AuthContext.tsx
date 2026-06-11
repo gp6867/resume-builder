@@ -2,7 +2,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import axios from 'axios'
 
-const API = axios.create({ baseURL: 'http://localhost:8000', headers: { 'Content-Type': 'application/json' } })
+const API = axios.create({ baseURL: 'https://resume-builder-production-201e.up.railway.app', headers: { 'Content-Type': 'application/json' } })
 
 interface User { id: string; name: string; email: string; plan: string }
 interface AuthContextType {

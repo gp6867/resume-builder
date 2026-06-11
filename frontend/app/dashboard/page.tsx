@@ -6,7 +6,7 @@ import { useAuth } from '@/contexts/AuthContext'
 import Navbar from '@/components/Navbar'
 import axios from 'axios'
 
-const API = axios.create({ baseURL: 'http://localhost:8000' })
+const API = axios.create({ baseURL: 'https://resume-builder-production-201e.up.railway.app' })
 
 export default function Dashboard() {
   const { user, logout, loading } = useAuth()
