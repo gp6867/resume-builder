@@ -12,7 +12,10 @@ if DATABASE_URL.startswith("postgres://"):
 engine = create_engine(
     DATABASE_URL,
     connect_args={"sslmode": "require"},
-    pool_pre_ping=True
+    pool_pre_ping=True,
+    pool_recycle=300,
+    pool_size=5,
+    max_overflow=10
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
@@ -39,7 +42,11 @@ class Resume(Base):
 
 
 def init_db():
-    Base.metadata.create_all(bind=engine)
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("Database tables created successfully!")
+    except Exception as e:
+        print(f"Database init error: {e}")
 
 
 def get_db():
