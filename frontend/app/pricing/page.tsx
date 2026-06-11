@@ -10,7 +10,7 @@ export default function Pricing() {
   const { user } = useAuth()
   const router = useRouter()
 
-  const handlePayment = (plan: { name: string; price: number; amount: number }) => {
+  const handlePayment = (plan: any) => {
     if (!user) { router.push('/signup'); return }
 
     const options = {
