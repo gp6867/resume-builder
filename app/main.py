@@ -1,31 +1,43 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from app.routes import resume, cover_letter, ats, auth, export
 from app.routes import google_auth
 from app.database import init_db
 
 app = FastAPI(title="AI Resume Builder API", version="1.0.0")
 
-origins = [
-    "https://resume-builder-qv5t-gygztry2p-kls-projects-453d419e.vercel.app",
-    "https://resume-builder-qv5t.vercel.app",
-    "https://*.vercel.app",
-    "http://localhost:3000",
-    "http://localhost:8000",
-]
+@app.middleware("http")
+async def add_cors_header(request: Request, call_next):
+    response = await call_next(request)
+    response.headers["Access-Control-Allow-Origin"] = "*"
+    response.headers["Access-Control-Allow-Credentials"] = "false"
+    response.headers["Access-Control-Allow-Methods"] = "*"
+    response.headers["Access-Control-Allow-Headers"] = "*"
+    return response
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=False,
-    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+    allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"],
 )
 
 @app.on_event("startup")
 def startup():
     init_db()
+
+@app.options("/{path:path}")
+async def options_handler(path: str):
+    return JSONResponse(
+        content={"message": "OK"},
+        headers={
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*",
+        }
+    )
 
 app.include_router(auth.router, prefix="/api/auth", tags=["Auth"])
 app.include_router(google_auth.router, prefix="/api/auth/google", tags=["Google Auth"])
@@ -41,7 +53,3 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
-
-@app.options("/{rest_of_path:path}")
-async def preflight_handler():
-    return {"message": "OK"}
