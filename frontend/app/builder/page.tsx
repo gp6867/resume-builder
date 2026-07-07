@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import axios from 'axios'
 
-const API = axios.create({ baseURL: 'https://resume-builder-production-201e.up.railway.app', headers: { 'Content-Type': 'application/json' } })
+const API = axios.create({ baseURL: 'https://resume-builder-1-jeiw.onrender.com', headers: { 'Content-Type': 'application/json' } })
 
 export default function Builder() {
   const { user, loading } = useAuth()
