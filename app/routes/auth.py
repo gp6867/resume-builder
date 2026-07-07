@@ -1,14 +1,22 @@
 from fastapi import APIRouter, HTTPException, Depends
 from sqlalchemy.orm import Session
-from passlib.context import CryptContext
 from jose import jwt
 from datetime import datetime, timedelta
 import uuid
+import bcrypt
 from app.database import get_db, User
 
 router = APIRouter()
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto", bcrypt__rounds=12)
 SECRET = "change-this-secret"
+
+def hash_password(password: str) -> str:
+    pwd_bytes = password[:72].encode('utf-8')
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(pwd_bytes, salt).decode('utf-8')
+
+def verify_password(password: str, hashed: str) -> bool:
+    pwd_bytes = password[:72].encode('utf-8')
+    return bcrypt.checkpw(pwd_bytes, hashed.encode('utf-8'))
 
 @router.post("/register")
 def register(data: dict, db: Session = Depends(get_db)):
@@ -19,9 +27,6 @@ def register(data: dict, db: Session = Depends(get_db)):
     if not email or not password or not name:
         raise HTTPException(status_code=400, detail="All fields are required")
 
-    # Password 72 bytes se zyada nahi hona chahiye
-    password = password[:72]
-
     existing = db.query(User).filter(User.email == email).first()
     if existing:
         raise HTTPException(status_code=400, detail="Email already registered")
@@ -31,7 +36,7 @@ def register(data: dict, db: Session = Depends(get_db)):
         id=user_id,
         name=name,
         email=email,
-        password=pwd_context.hash(password),
+        password=hash_password(password),
         plan="free"
     )
     db.add(user)
@@ -50,10 +55,10 @@ def register(data: dict, db: Session = Depends(get_db)):
 @router.post("/login")
 def login(data: dict, db: Session = Depends(get_db)):
     email = data.get("email")
-    password = data.get("password", "")[:72]
+    password = data.get("password", "")
 
     user = db.query(User).filter(User.email == email).first()
-    if not user or not pwd_context.verify(password, user.password):
+    if not user or not verify_password(password, user.password):
         raise HTTPException(status_code=401, detail="Invalid email or password")
 
     token = jwt.encode(
