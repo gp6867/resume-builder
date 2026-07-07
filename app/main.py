@@ -7,18 +7,15 @@ from app.database import init_db
 
 app = FastAPI(title="AI Resume Builder API", version="1.0.0")
 
-@app.middleware("http")
-async def add_cors_header(request: Request, call_next):
-    response = await call_next(request)
-    response.headers["Access-Control-Allow-Origin"] = "*"
-    response.headers["Access-Control-Allow-Credentials"] = "false"
-    response.headers["Access-Control-Allow-Methods"] = "*"
-    response.headers["Access-Control-Allow-Headers"] = "*"
-    return response
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=[
+        "https://resumex-ai.com",
+        "https://www.resumex-ai.com",
+        "https://resume-builder-two-omega-17.vercel.app",
+        "https://resume-builder-1-jeiw.onrender.com",
+        "http://localhost:3000",
+    ],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,7 +26,7 @@ def startup():
     init_db()
 
 @app.options("/{path:path}")
-async def options_handler(path: str):
+async def options_handler(path: str, request: Request):
     return JSONResponse(
         content={"message": "OK"},
         headers={
