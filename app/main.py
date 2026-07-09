@@ -2,20 +2,14 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.routes import resume, cover_letter, ats, auth, export
-from app.routes import google_auth
+from app.routes import google_auth, payment
 from app.database import init_db
 
 app = FastAPI(title="AI Resume Builder API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://resumex-ai.com",
-        "https://www.resumex-ai.com",
-        "https://resume-builder-two-omega-17.vercel.app",
-        "https://resume-builder-1-jeiw.onrender.com",
-        "http://localhost:3000",
-    ],
+    allow_origins=["*"],
     allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -42,6 +36,7 @@ app.include_router(resume.router, prefix="/api/resume", tags=["Resume"])
 app.include_router(cover_letter.router, prefix="/api/cover-letter", tags=["Cover Letter"])
 app.include_router(ats.router, prefix="/api/ats", tags=["ATS"])
 app.include_router(export.router, prefix="/api/export", tags=["Export"])
+app.include_router(payment.router, prefix="/api/payment", tags=["Payment"])
 
 @app.get("/")
 def root():
