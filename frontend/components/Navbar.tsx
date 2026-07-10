@@ -15,7 +15,7 @@ export default function Navbar() {
       position: 'sticky', top: 0, zIndex: 100
     }}>
       <Link href="/" style={{ textDecoration: 'none' }}>
-        <span style={{ fontSize: '22px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeAI</span>
+        <span style={{ fontSize: '22px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeX AI</span>
       </Link>
       <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
         <Link href="/" style={{ color: '#888899', textDecoration: 'none', fontSize: '14px' }}>Home</Link>
