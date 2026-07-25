@@ -40,7 +40,7 @@ export default function Signup() {
       <div style={{ width: '100%', maxWidth: '420px' }}>
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
-            <span style={{ fontSize: '28px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeAI</span>
+            <span style={{ fontSize: '28px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeX AI</span>
           </Link>
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#e8e8f0', marginTop: '16px' }}>Create your account</h1>
           <p style={{ color: '#888899', marginTop: '8px' }}>Start building professional resumes today</p>
