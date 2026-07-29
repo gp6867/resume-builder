@@ -5,6 +5,26 @@ import Link from 'next/link'
 export default function ForgotPassword() {
   const [email, setEmail] = useState('')
   const [sent, setSent] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async () => {
+    if (!email) { setError('Email is required'); return }
+    setLoading(true)
+    setError('')
+    try {
+      const res = await fetch('https://resume-builder-1-jeiw.onrender.com/api/forgot-password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      })
+      if (res.ok) setSent(true)
+      else setError('Something went wrong. Please try again.')
+    } catch (e) {
+      setError('Something went wrong. Please try again.')
+    }
+    setLoading(false)
+  }
 
   const inp: React.CSSProperties = { background: '#1a1a28', border: '1px solid #222230', borderRadius: '8px', color: '#e8e8f0', padding: '12px 14px', fontSize: '15px', width: '100%', outline: 'none' }
   const lbl: React.CSSProperties = { display: 'block', fontSize: '13px', color: '#888899', marginBottom: '6px', fontWeight: 500 }
@@ -14,22 +34,30 @@ export default function ForgotPassword() {
       <div style={{ width: '100%', maxWidth: '420px' }}>
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <Link href="/" style={{ textDecoration: 'none' }}>
-            <span style={{ fontSize: '28px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeAI</span>
+            <span style={{ fontSize: '28px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeX AI</span>
           </Link>
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#e8e8f0', marginTop: '16px' }}>Reset your password</h1>
-          <p style={{ color: '#888899', marginTop: '8px' }}>Enter your email and we'll send you a reset link</p>
+          <p style={{ color: '#888899', marginTop: '8px' }}>Enter your email and we will send you a reset link</p>
         </div>
+
         <div style={{ background: '#111118', border: '1px solid #222230', borderRadius: '16px', padding: '32px' }}>
           {!sent ? (
             <>
+              {error && (
+                <div style={{ background: '#ff658422', border: '1px solid #ff658444', borderRadius: '8px', padding: '12px', marginBottom: '16px', color: '#ff6584', fontSize: '14px' }}>
+                  {error}
+                </div>
+              )}
               <div style={{ marginBottom: '24px' }}>
                 <label style={lbl}>Email address</label>
-                <input style={inp} type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="john@email.com" />
+                <input style={inp} type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="john@email.com"
+                  onKeyDown={e => e.key === 'Enter' && handleSubmit()} />
               </div>
-              <button onClick={() => email && setSent(true)} style={{
+              <button onClick={handleSubmit} disabled={loading} style={{
                 width: '100%', padding: '14px', fontSize: '16px', fontWeight: 700,
-                background: '#6c63ff', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer'
-              }}>Send Reset Link</button>
+                background: loading ? '#444' : '#6c63ff', color: 'white',
+                border: 'none', borderRadius: '8px', cursor: loading ? 'not-allowed' : 'pointer'
+              }}>{loading ? 'Sending...' : 'Send Reset Link'}</button>
             </>
           ) : (
             <div style={{ textAlign: 'center', padding: '20px 0' }}>

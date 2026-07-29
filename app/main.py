@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from app.routes import resume, cover_letter, ats, auth, export
-from app.routes import google_auth, payment
+from app.routes import google_auth, payment, contact, forgot_password
 from app.database import init_db
 
 app = FastAPI(title="AI Resume Builder API", version="1.0.0")
@@ -37,6 +37,8 @@ app.include_router(cover_letter.router, prefix="/api/cover-letter", tags=["Cover
 app.include_router(ats.router, prefix="/api/ats", tags=["ATS"])
 app.include_router(export.router, prefix="/api/export", tags=["Export"])
 app.include_router(payment.router, prefix="/api/payment", tags=["Payment"])
+app.include_router(contact.router, prefix="/api/contact", tags=["Contact"])
+app.include_router(forgot_password.router, prefix="/api", tags=["Forgot Password"])
 
 @app.get("/")
 def root():
