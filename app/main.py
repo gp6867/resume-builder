@@ -38,7 +38,7 @@ app.include_router(ats.router, prefix="/api/ats", tags=["ATS"])
 app.include_router(export.router, prefix="/api/export", tags=["Export"])
 app.include_router(payment.router, prefix="/api/payment", tags=["Payment"])
 app.include_router(contact.router, prefix="/api/contact", tags=["Contact"])
-app.include_router(forgot_password.router, prefix="/api", tags=["Forgot Password"])
+app.include_router(forgot_password.router, prefix="/api", tags=["Password Reset"])
 
 @app.get("/")
 def root():
