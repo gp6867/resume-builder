@@ -4,6 +4,7 @@ from app.database import get_db, User
 from jose import jwt
 from datetime import datetime, timedelta
 import smtplib
+import ssl
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
@@ -15,16 +16,26 @@ GMAIL_PASSWORD = os.getenv("GMAIL_APP_PASSWORD", "")
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://resumex-ai.com")
 SECRET = "change-this-secret"
 
+def send_email(to_email: str, subject: str, html_body: str):
+    msg = MIMEMultipart()
+    msg['From'] = GMAIL_USER
+    msg['To'] = to_email
+    msg['Subject'] = subject
+    msg.attach(MIMEText(html_body, 'html'))
+    
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as server:
+        server.login(GMAIL_USER, GMAIL_PASSWORD)
+        server.sendmail(GMAIL_USER, to_email, msg.as_string())
+
 @router.post("/forgot-password")
 def forgot_password(data: dict, db: Session = Depends(get_db)):
     email = data.get("email", "")
     
     user = db.query(User).filter(User.email == email).first()
     if not user:
-        # Security ke liye same response dete hain
         return {"message": "If email exists, reset link has been sent"}
     
-    # Reset token banao
     token = jwt.encode(
         {"sub": user.id, "email": email, "exp": datetime.utcnow() + timedelta(hours=1)},
         SECRET
@@ -32,14 +43,8 @@ def forgot_password(data: dict, db: Session = Depends(get_db)):
     
     reset_url = f"{FRONTEND_URL}/reset-password?token={token}"
     
-    # Email bhejo
     try:
-        msg = MIMEMultipart()
-        msg['From'] = GMAIL_USER
-        msg['To'] = email
-        msg['Subject'] = "Reset Your ResumeX AI Password"
-        
-        body = f"""
+        html_body = f"""
         <html>
         <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
             <div style="background: #0a0a0f; padding: 40px; border-radius: 12px; text-align: center;">
@@ -54,15 +59,7 @@ def forgot_password(data: dict, db: Session = Depends(get_db)):
         </body>
         </html>
         """
-        
-        msg.attach(MIMEText(body, 'html'))
-        
-        server = smtplib.SMTP('smtp.gmail.com', 587)
-        server.starttls()
-        server.login(GMAIL_USER, GMAIL_PASSWORD)
-        server.sendmail(GMAIL_USER, email, msg.as_string())
-        server.quit()
-        
+        send_email(email, "Reset Your ResumeX AI Password", html_body)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Email sending failed: {str(e)}")
     
