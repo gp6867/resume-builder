@@ -55,3 +55,19 @@ def get_db():
         yield db
     finally:
         db.close()
+
+
+class Referral(Base):
+    __tablename__ = "referrals"
+    id = Column(String, primary_key=True)
+    referrer_id = Column(String, nullable=False)
+    referred_email = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+class UserExtra(Base):
+    __tablename__ = "user_extra"
+    user_id = Column(String, primary_key=True)
+    referral_code = Column(String, unique=True, nullable=False)
+    extra_resumes = Column(Integer, default=0)
+    total_referred = Column(Integer, default=0)

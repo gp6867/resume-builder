@@ -4,25 +4,37 @@ from jose import jwt
 from datetime import datetime, timedelta
 import uuid
 import bcrypt
+import random
+import string
 from app.database import get_db, User
 
 router = APIRouter()
 SECRET = "change-this-secret"
+
+
+def generate_referral_code():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+
 
 def hash_password(password: str) -> str:
     pwd_bytes = password[:72].encode('utf-8')
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(pwd_bytes, salt).decode('utf-8')
 
+
 def verify_password(password: str, hashed: str) -> bool:
     pwd_bytes = password[:72].encode('utf-8')
     return bcrypt.checkpw(pwd_bytes, hashed.encode('utf-8'))
 
+
 @router.post("/register")
 def register(data: dict, db: Session = Depends(get_db)):
+    from app.routes.referral import UserExtra, Referral
+
     email = data.get("email")
     name = data.get("name", "")
     password = data.get("password", "")
+    ref_code = data.get("ref", "")
 
     if not email or not password or not name:
         raise HTTPException(status_code=400, detail="All fields are required")
@@ -40,6 +52,34 @@ def register(data: dict, db: Session = Depends(get_db)):
         plan="free"
     )
     db.add(user)
+
+    # Referral code generate karo new user ke liye
+    new_user_extra = UserExtra(
+        user_id=user_id,
+        referral_code=generate_referral_code(),
+        extra_resumes=0,
+        total_referred=0
+    )
+    db.add(new_user_extra)
+
+    # Referral process karo
+    if ref_code:
+        referrer_extra = db.query(UserExtra).filter(UserExtra.referral_code == ref_code).first()
+        if referrer_extra:
+            referral = Referral(
+                id=str(uuid.uuid4()),
+                referrer_id=referrer_extra.user_id,
+                referred_email=email,
+                created_at=datetime.utcnow()
+            )
+            db.add(referral)
+
+            referrer_extra.total_referred += 1
+
+            # Har 7 referrals pe 1 extra resume
+            if referrer_extra.total_referred % 7 == 0:
+                referrer_extra.extra_resumes += 1
+
     db.commit()
 
     token = jwt.encode(
@@ -51,6 +91,7 @@ def register(data: dict, db: Session = Depends(get_db)):
         "token_type": "bearer",
         "user": {"id": user_id, "name": name, "email": email, "plan": "free"}
     }
+
 
 @router.post("/login")
 def login(data: dict, db: Session = Depends(get_db)):

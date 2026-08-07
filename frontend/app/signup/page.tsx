@@ -1,7 +1,7 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 
 export default function Signup() {
@@ -11,8 +11,15 @@ export default function Signup() {
   const [confirm, setConfirm] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [refCode, setRefCode] = useState('')
   const { register } = useAuth()
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const ref = searchParams.get('ref')
+    if (ref) setRefCode(ref)
+  }, [])
 
   const handleSubmit = async () => {
     if (!name || !email || !password) { setError('All fields are required'); return }
@@ -20,7 +27,7 @@ export default function Signup() {
     if (password.length < 6) { setError('Password must be at least 6 characters'); return }
     setLoading(true); setError('')
     try {
-      await register(name, email, password)
+      await register(name, email, password, refCode)
       router.push('/dashboard')
     } catch (e: any) {
       setError(e.response?.data?.detail || 'Registration failed')
@@ -29,7 +36,7 @@ export default function Signup() {
   }
 
   const handleGoogle = () => {
-    window.location.href = 'https://resume-builder-1-jeiw.onrender.com/api/auth/google/login'
+    window.location.href = `https://resume-builder-1-jeiw.onrender.com/api/auth/google/login${refCode ? `?ref=${refCode}` : ''}`
   }
 
   const inp: React.CSSProperties = { background: '#1a1a28', border: '1px solid #222230', borderRadius: '8px', color: '#e8e8f0', padding: '12px 14px', fontSize: '15px', width: '100%', outline: 'none' }
@@ -43,11 +50,12 @@ export default function Signup() {
             <span style={{ fontSize: '28px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeX AI</span>
           </Link>
           <h1 style={{ fontSize: '24px', fontWeight: 800, color: '#e8e8f0', marginTop: '16px' }}>Create your account</h1>
-          <p style={{ color: '#888899', marginTop: '8px' }}>Start building professional resumes today</p>
+          <p style={{ color: '#888899', marginTop: '8px' }}>
+            {refCode ? '🎉 You were invited! Sign up to get started.' : 'Start building professional resumes today'}
+          </p>
         </div>
 
         <div style={{ background: '#111118', border: '1px solid #222230', borderRadius: '16px', padding: '32px' }}>
-          {/* Google Signup */}
           <button onClick={handleGoogle} style={{
             width: '100%', padding: '12px', borderRadius: '8px', border: '1px solid #333',
             background: '#1a1a28', color: '#e8e8f0', fontSize: '15px', fontWeight: 600,

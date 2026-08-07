@@ -13,16 +13,20 @@ def generate_resume(data: dict, db: Session = Depends(get_db)):
     try:
         user_id = data.get("user_id")
 
-        # Free plan limit check
         if user_id:
+            from app.routes.referral import UserExtra
             user = db.query(User).filter(User.id == user_id).first()
-            if user and user.plan == "free":
-                resume_count = db.query(Resume).filter(Resume.user_id == user_id).count()
-                if resume_count >= 1:
-                    raise HTTPException(
-                        status_code=403,
-                        detail="Free plan limit reached. Please upgrade to Pro for unlimited resumes."
-                    )
+            user_extra = db.query(UserExtra).filter(UserExtra.user_id == user_id).first()
+
+            extra_resumes = user_extra.extra_resumes if user_extra else 0
+            resume_count = db.query(Resume).filter(Resume.user_id == user_id).count()
+            allowed = 1 + extra_resumes
+
+            if user and user.plan == "free" and resume_count >= allowed:
+                raise HTTPException(
+                    status_code=403,
+                    detail=f"Free plan limit reached. You have used {resume_count}/{allowed} resumes. Refer 7 friends for 1 more free resume or upgrade to Pro."
+                )
 
         result = generate_resume_ai(data)
 

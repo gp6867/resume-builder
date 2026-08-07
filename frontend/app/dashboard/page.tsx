@@ -12,10 +12,15 @@ export default function Dashboard() {
   const { user, logout, loading } = useAuth()
   const router = useRouter()
   const [resumes, setResumes] = useState<any[]>([])
+  const [referral, setReferral] = useState<any>(null)
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     if (!loading && !user) router.push('/login')
-    if (user) fetchResumes()
+    if (user) {
+      fetchResumes()
+      fetchReferral()
+    }
   }, [user, loading])
 
   const fetchResumes = async () => {
@@ -23,6 +28,21 @@ export default function Dashboard() {
       const res = await API.get(`/api/resume/my-resumes/${user?.id}`)
       setResumes(res.data.resumes)
     } catch (e) {}
+  }
+
+  const fetchReferral = async () => {
+    try {
+      const res = await API.post('/api/referral/get-referral-code', { user_id: user?.id })
+      setReferral(res.data)
+    } catch (e) {}
+  }
+
+  const copyReferralLink = () => {
+    if (referral?.referral_url) {
+      navigator.clipboard.writeText(referral.referral_url)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    }
   }
 
   const deleteResume = async (id: string) => {
@@ -41,6 +61,9 @@ export default function Dashboard() {
   if (!user) return null
 
   const displayName = user.name ? user.name.split(' ')[0] : user.email.split('@')[0]
+  const referred = referral?.total_referred || 0
+  const needed = 7 - (referred % 7)
+  const progress = ((referred % 7) / 7) * 100
 
   return (
     <>
@@ -57,7 +80,8 @@ export default function Dashboard() {
           }}>Log Out</button>
         </div>
 
-        <div style={{ background: '#111118', border: '1px solid #6c63ff44', borderRadius: '12px', padding: '24px', marginBottom: '32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        {/* Plan Card */}
+        <div style={{ background: '#111118', border: '1px solid #6c63ff44', borderRadius: '12px', padding: '24px', marginBottom: '24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <div style={{ color: '#888899', fontSize: '13px', marginBottom: '4px' }}>Current Plan</div>
             <div style={{ fontSize: '24px', fontWeight: 800, color: '#6c63ff', textTransform: 'uppercase' }}>{user.plan || 'Free'}</div>
@@ -72,6 +96,72 @@ export default function Dashboard() {
           )}
         </div>
 
+        {/* Referral Section */}
+        {(!user.plan || user.plan === 'free') && (
+          <div style={{ background: 'linear-gradient(135deg, #1a1040, #0a0a1f)', border: '1px solid #6c63ff44', borderRadius: '12px', padding: '28px', marginBottom: '24px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px', flexWrap: 'wrap', gap: '12px' }}>
+              <div>
+                <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#e8e8f0', marginBottom: '6px' }}>
+                  Get 1 Free Resume — Invite Friends!
+                </h2>
+                <p style={{ color: '#888899', fontSize: '14px' }}>
+                  Invite 7 friends to sign up and get 1 extra free resume automatically!
+                </p>
+              </div>
+              <div style={{ textAlign: 'center', background: '#6c63ff22', border: '1px solid #6c63ff44', borderRadius: '10px', padding: '12px 20px' }}>
+                <div style={{ fontSize: '28px', fontWeight: 900, color: '#6c63ff' }}>{referred}/7</div>
+                <div style={{ fontSize: '12px', color: '#888899' }}>Friends Joined</div>
+              </div>
+            </div>
+
+            {/* Progress Bar */}
+            <div style={{ marginBottom: '20px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+                <span style={{ fontSize: '13px', color: '#888899' }}>{referred} friends joined</span>
+                <span style={{ fontSize: '13px', color: '#6c63ff' }}>{needed} more needed</span>
+              </div>
+              <div style={{ background: '#222230', borderRadius: '999px', height: '8px', overflow: 'hidden' }}>
+                <div style={{ background: 'linear-gradient(90deg, #6c63ff, #a855f7)', height: '100%', width: `${progress}%`, borderRadius: '999px', transition: 'width 0.3s' }} />
+              </div>
+            </div>
+
+            {/* Referral Link */}
+            {referral?.referral_url && (
+              <div>
+                <div style={{ fontSize: '13px', color: '#888899', marginBottom: '8px' }}>Your referral link:</div>
+                <div style={{ display: 'flex', gap: '10px' }}>
+                  <div style={{ flex: 1, background: '#1a1a28', border: '1px solid #222230', borderRadius: '8px', padding: '10px 14px', fontSize: '13px', color: '#e8e8f0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {referral.referral_url}
+                  </div>
+                  <button onClick={copyReferralLink} style={{
+                    background: copied ? '#00d4aa' : '#6c63ff', color: 'white', padding: '10px 20px',
+                    border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '14px', whiteSpace: 'nowrap'
+                  }}>
+                    {copied ? 'Copied!' : 'Copy Link'}
+                  </button>
+                </div>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                  <a href={`https://wa.me/?text=Create%20your%20professional%20resume%20for%20free%20with%20AI!%20${encodeURIComponent(referral.referral_url)}`} target="_blank" style={{
+                    background: '#25D366', color: 'white', padding: '8px 16px',
+                    borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: 600
+                  }}>Share on WhatsApp</a>
+                  <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(referral.referral_url)}`} target="_blank" style={{
+                    background: '#0077B5', color: 'white', padding: '8px 16px',
+                    borderRadius: '8px', textDecoration: 'none', fontSize: '13px', fontWeight: 600
+                  }}>Share on LinkedIn</a>
+                </div>
+              </div>
+            )}
+
+            {referral?.extra_resumes > 0 && (
+              <div style={{ marginTop: '16px', background: '#00d4aa22', border: '1px solid #00d4aa44', borderRadius: '8px', padding: '12px', color: '#00d4aa', fontSize: '14px' }}>
+                You have {referral.extra_resumes} extra free resume{referral.extra_resumes > 1 ? 's' : ''} available!
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Quick Actions */}
         <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#e8e8f0', marginBottom: '20px' }}>Quick Actions</h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginBottom: '40px' }}>
           {[
@@ -92,6 +182,7 @@ export default function Dashboard() {
           ))}
         </div>
 
+        {/* My Resumes */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
           <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#e8e8f0' }}>My Resumes ({resumes.length})</h2>
           <Link href="/builder">
