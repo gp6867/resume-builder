@@ -15,7 +15,7 @@ export default function Pricing() {
 
     setLoading(plan.name)
     try {
-      const res = await fetch('https://resume-builder-79tf.onrender.com/api/payment/create-checkout', {
+      const res = await fetch('https://resume-builder-1-jeiw.onrender.com/api/payment/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
