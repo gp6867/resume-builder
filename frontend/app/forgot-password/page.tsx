@@ -13,7 +13,7 @@ export default function ForgotPassword() {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch('https://resume-builder-1-jeiw.onrender.com/api/forgot-password', {
+      const res = await fetch('https://resume-builder-79tf.onrender.com/api/forgot-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
