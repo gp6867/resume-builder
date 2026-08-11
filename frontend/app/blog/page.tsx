@@ -1,18 +1,12 @@
+'use client'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
-import type { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Resume Tips & Career Advice Blog | ResumeX AI',
-  description: 'Free resume writing tips, ATS optimization guides, cover letter examples, and career advice. Learn how to write a professional resume that gets interviews.',
-  keywords: 'resume tips, how to write a resume, ATS resume, resume builder guide, cover letter tips, resume examples, job search tips, career advice, resume format, resume writing'
-}
 
 const posts = [
   {
     slug: 'how-to-write-ats-resume',
     title: 'How to Write an ATS-Optimized Resume in 2025 (Complete Guide)',
-    excerpt: 'Learn exactly how Applicant Tracking Systems work and how to write a resume that passes ATS filters every time. Includes keywords, formatting tips, and examples.',
+    excerpt: 'Learn exactly how Applicant Tracking Systems work and how to write a resume that passes ATS filters every time.',
     date: 'August 2025',
     readTime: '8 min read',
     tag: 'ATS Resume'
@@ -20,7 +14,7 @@ const posts = [
   {
     slug: 'ai-resume-builder-guide',
     title: 'How to Use an AI Resume Builder to Land More Interviews',
-    excerpt: 'AI resume builders have changed job searching forever. Learn how to use AI to write a professional resume, cover letter, and optimize for any job description.',
+    excerpt: 'AI resume builders have changed job searching forever. Learn how to use AI to write a professional resume and cover letter.',
     date: 'August 2025',
     readTime: '6 min read',
     tag: 'AI Resume Builder'
@@ -28,7 +22,7 @@ const posts = [
   {
     slug: 'resume-tips-2025',
     title: '15 Resume Tips That Will Get You More Interviews in 2025',
-    excerpt: 'The job market has changed. These 15 proven resume writing tips will help you stand out from hundreds of applicants and land more interview callbacks.',
+    excerpt: 'These 15 proven resume writing tips will help you stand out from hundreds of applicants and land more interview callbacks.',
     date: 'July 2025',
     readTime: '7 min read',
     tag: 'Resume Tips'
@@ -36,7 +30,7 @@ const posts = [
   {
     slug: 'cover-letter-guide',
     title: 'How to Write a Cover Letter That Gets Read (With Examples)',
-    excerpt: 'Most cover letters get ignored. Learn the exact formula for writing a compelling cover letter that makes hiring managers want to read your resume.',
+    excerpt: 'Most cover letters get ignored. Learn the exact formula for writing a compelling cover letter that gets interviews.',
     date: 'July 2025',
     readTime: '5 min read',
     tag: 'Cover Letter'
@@ -52,7 +46,7 @@ export default function Blog() {
           <div style={{ textAlign: 'center', marginBottom: '64px' }}>
             <div style={{ fontSize: '12px', color: '#6c63ff', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '16px' }}>Resume Tips & Career Advice</div>
             <h1 style={{ fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 900, color: '#e8e8f0', letterSpacing: '-1px', marginBottom: '16px' }}>
-              Resume Writing Tips<br />& Career Advice Blog
+              Resume Writing Tips & Career Advice Blog
             </h1>
             <p style={{ color: '#888899', fontSize: '16px', maxWidth: '560px', margin: '0 auto', lineHeight: 1.7 }}>
               Free guides on resume writing, ATS optimization, cover letters, and job search strategies to help you land your dream job faster.
