@@ -102,12 +102,17 @@ export default function Builder() {
   }
 
   const downloadHTML = () => {
-    const blob = new Blob([preview], { type: 'text/html' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `${form.full_name.replace(' ', '_')}_resume.html`
-    a.click()
+    // Open in new window and trigger print as PDF
+    const printWindow = window.open('', '_blank')
+    if (printWindow) {
+      printWindow.document.write(preview)
+      printWindow.document.close()
+      printWindow.focus()
+      setTimeout(() => {
+        printWindow.print()
+        printWindow.close()
+      }, 500)
+    }
   }
 
   if (loading) return (
