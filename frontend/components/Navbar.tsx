@@ -9,45 +9,38 @@ export default function Navbar() {
 
   return (
     <nav style={{
-      background: '#0a0a0f', borderBottom: '1px solid #222230',
+      background: '#0a0a0f', borderBottom: '1px solid #1e1e30',
       padding: '0 40px', height: '64px', display: 'flex',
       alignItems: 'center', justifyContent: 'space-between',
-      position: 'sticky', top: 0, zIndex: 100
+      position: 'sticky', top: 0, zIndex: 100, backdropFilter: 'blur(10px)'
     }}>
       <Link href="/" style={{ textDecoration: 'none' }}>
-        <span style={{ fontSize: '22px', fontWeight: 800, color: '#6c63ff' }}>✦ ResumeX AI</span>
+        <span style={{ fontSize: '22px', fontWeight: 800, background: 'linear-gradient(135deg, #6c63ff, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+          ✦ ResumeX AI
+        </span>
       </Link>
-      <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
-        <Link href="/" style={{ color: '#888899', textDecoration: 'none', fontSize: '14px' }}>Home</Link>
-        <Link href="/builder" style={{ color: '#888899', textDecoration: 'none', fontSize: '14px' }}>Builder</Link>
-        <Link href="/pricing" style={{ color: '#888899', textDecoration: 'none', fontSize: '14px' }}>Pricing</Link>
+      <div style={{ display: 'flex', gap: '28px', alignItems: 'center' }}>
+        <Link href="/" style={{ color: '#666688', textDecoration: 'none', fontSize: '14px', fontWeight: 500 }}>Home</Link>
+        <Link href="/builder" style={{ color: '#666688', textDecoration: 'none', fontSize: '14px', fontWeight: 500 }}>Builder</Link>
+        <Link href="/pricing" style={{ color: '#666688', textDecoration: 'none', fontSize: '14px', fontWeight: 500 }}>Pricing</Link>
+        <Link href="/blog" style={{ color: '#666688', textDecoration: 'none', fontSize: '14px', fontWeight: 500 }}>Blog</Link>
         {user ? (
           <>
-            <Link href="/dashboard" style={{ color: '#888899', textDecoration: 'none', fontSize: '14px' }}>Dashboard</Link>
+            <Link href="/dashboard" style={{ color: '#666688', textDecoration: 'none', fontSize: '14px', fontWeight: 500 }}>Dashboard</Link>
             <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{
-                background: '#6c63ff22', border: '1px solid #6c63ff44',
-                borderRadius: '999px', padding: '6px 14px', fontSize: '13px', color: '#6c63ff', fontWeight: 600
-              }}>👤 {user.name.split(' ')[0]}</div>
-              <button onClick={() => { logout(); router.push('/') }} style={{
-                background: 'transparent', color: '#ff6584', padding: '7px 16px',
-                border: '1px solid #ff658444', borderRadius: '8px', cursor: 'pointer', fontSize: '13px', fontWeight: 600
-              }}>Log Out</button>
+              <div style={{ background: '#6c63ff22', border: '1px solid #6c63ff44', borderRadius: '999px', padding: '6px 14px', fontSize: '13px', color: '#a78bfa', fontWeight: 600 }}>
+                👤 {user.name ? user.name.split(' ')[0] : user.email.split('@')[0]}
+              </div>
+              <button onClick={() => { logout(); router.push('/') }} style={{ background: 'transparent', color: '#ff6584', padding: '7px 16px', border: '1px solid #ff658444', borderRadius: '8px', cursor: 'pointer', fontSize: '13px', fontWeight: 600 }}>Log Out</button>
             </div>
           </>
         ) : (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <Link href="/login">
-              <button style={{
-                background: 'transparent', color: '#e8e8f0', padding: '8px 18px',
-                border: '1px solid #333', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 600
-              }}>Log In</button>
+              <button style={{ background: 'transparent', color: '#e8e8f0', padding: '8px 18px', border: '1px solid #333', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 600 }}>Log In</button>
             </Link>
             <Link href="/signup">
-              <button style={{
-                background: '#6c63ff', color: 'white', padding: '8px 18px',
-                border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 600
-              }}>Get Started Free</button>
+              <button style={{ background: 'linear-gradient(135deg, #6c63ff, #a855f7)', color: 'white', padding: '8px 18px', border: 'none', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', fontWeight: 700 }}>Get Started Free</button>
             </Link>
           </div>
         )}
