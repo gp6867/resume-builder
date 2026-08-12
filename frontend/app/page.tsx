@@ -258,6 +258,78 @@ export default function Home() {
           </div>
         </section>
 
+
+        {/* ATS SCORE ANIMATION */}
+        <section style={{ padding: isMobile ? '60px 16px' : '100px 20px', background: '#0a0a0f' }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+            <div style={{ fontSize: '12px', color: '#6c63ff', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>ATS Score Checker</div>
+            <h2 style={{ fontSize: isMobile ? '28px' : 'clamp(28px, 4vw, 48px)', fontWeight: 900, letterSpacing: '-1px', marginBottom: '16px' }}>
+              Know your score before you apply
+            </h2>
+            <p style={{ color: '#9999bb', fontSize: '16px', maxWidth: '500px', margin: '0 auto 48px', lineHeight: 1.7 }}>
+              Our AI analyzes your resume against the job description and gives you a real ATS compatibility score with specific fixes.
+            </p>
+
+            <div style={{ background: '#111118', border: '1px solid #1e1e30', borderRadius: '20px', padding: isMobile ? '24px' : '40px', maxWidth: '700px', margin: '0 auto' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '32px', alignItems: 'center' }}>
+                
+                {/* Score Circle */}
+                <div style={{ textAlign: 'center' }}>
+                  <div style={{ position: 'relative', width: '160px', height: '160px', margin: '0 auto 16px' }}>
+                    <svg width="160" height="160" style={{ transform: 'rotate(-90deg)' }}>
+                      <circle cx="80" cy="80" r="70" fill="none" stroke="#1e1e30" strokeWidth="12" />
+                      <circle cx="80" cy="80" r="70" fill="none" stroke="url(#grad)" strokeWidth="12"
+                        strokeDasharray="440" strokeDashoffset="110" strokeLinecap="round" />
+                      <defs>
+                        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#6c63ff" />
+                          <stop offset="100%" stopColor="#a855f7" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                    <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
+                      <div style={{ fontSize: '36px', fontWeight: 900, color: '#e8e8f0' }}>75</div>
+                      <div style={{ fontSize: '12px', color: '#6c63ff', fontWeight: 600 }}>out of 100</div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: '16px', fontWeight: 700, color: '#e8e8f0', marginBottom: '4px' }}>Grade: B+</div>
+                  <div style={{ fontSize: '13px', color: '#888899' }}>ATS Compatibility Score</div>
+                </div>
+
+                {/* Issues & Fixes */}
+                <div style={{ textAlign: 'left' }}>
+                  <div style={{ marginBottom: '20px' }}>
+                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#ff6584', marginBottom: '10px' }}>Issues Found</div>
+                    {['Missing keyword: "agile"', 'Add measurable achievements', 'Include certification section'].map(issue => (
+                      <div key={issue} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#ff6584', flexShrink: 0 }} />
+                        <div style={{ fontSize: '13px', color: '#888899' }}>{issue}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#00d4aa', marginBottom: '10px' }}>AI Suggestions</div>
+                    {['Add "Agile/Scrum" to skills', 'Quantify results with numbers', 'Add AWS certification'].map(fix => (
+                      <div key={fix} style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+                        <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#00d4aa', flexShrink: 0 }} />
+                        <div style={{ fontSize: '13px', color: '#888899' }}>{fix}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ marginTop: '32px', paddingTop: '24px', borderTop: '1px solid #1e1e30', textAlign: 'center' }}>
+                <Link href="/builder">
+                  <button style={{ background: 'linear-gradient(135deg, #6c63ff, #a855f7)', color: 'white', padding: '12px 32px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 700 }}>
+                    Check My Resume Score Free →
+                  </button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section style={{ padding: isMobile ? '60px 16px' : '100px 20px', background: '#0d0d15' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>

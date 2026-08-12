@@ -39,7 +39,7 @@ export default function ResumeTips() {
             <Link href="/blog" style={{ color: '#6c63ff', textDecoration: 'none', fontSize: '14px' }}>← Back to Blog</Link>
             <div style={{ display: 'flex', gap: '12px', alignItems: 'center', margin: '20px 0' }}>
               <span style={{ fontSize: '11px', fontWeight: 700, color: '#6c63ff', background: '#6c63ff15', border: '1px solid #6c63ff30', borderRadius: '999px', padding: '3px 10px' }}>Resume Tips</span>
-              <span style={{ fontSize: '12px', color: '#444466' }}>July 2025 · 7 min read</span>
+              <span style={{ fontSize: '12px', color: '#444466' }}>July 2026 · 7 min read</span>
             </div>
             <h1 style={{ fontSize: 'clamp(28px, 4vw, 48px)', fontWeight: 900, color: '#e8e8f0', lineHeight: 1.2, letterSpacing: '-1px', marginBottom: '20px' }}>
               15 Resume Tips That Will Get You More Interviews in 2025
