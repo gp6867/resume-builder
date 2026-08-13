@@ -330,6 +330,72 @@ export default function Home() {
           </div>
         </section>
 
+
+        {/* COVER LETTER ANIMATION */}
+        <section style={{ padding: isMobile ? '60px 16px' : '100px 20px', background: '#0d0d15' }}>
+          <div style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '48px', alignItems: 'center' }}>
+              
+              {/* Left - Text */}
+              <div>
+                <div style={{ fontSize: '12px', color: '#6c63ff', fontWeight: 700, letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '12px' }}>AI Cover Letter Writer</div>
+                <h2 style={{ fontSize: isMobile ? '28px' : '40px', fontWeight: 900, letterSpacing: '-1px', marginBottom: '16px', lineHeight: 1.1 }}>
+                  A tailored cover letter for every job — in seconds
+                </h2>
+                <p style={{ color: '#9999bb', fontSize: '15px', lineHeight: 1.7, marginBottom: '24px' }}>
+                  Paste the job description and our AI writes a personalized cover letter matched to the role, the company, and your experience. No templates. Real writing.
+                </p>
+                {[
+                  'Tailored to the specific job and company',
+                  'Written in professional business English',
+                  'Highlights your most relevant experience',
+                  'Ready in under 10 seconds',
+                ].map(item => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                    <div style={{ width: '20px', height: '20px', borderRadius: '50%', background: '#6c63ff22', border: '1px solid #6c63ff44', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', color: '#6c63ff', flexShrink: 0 }}>✓</div>
+                    <div style={{ fontSize: '14px', color: '#888899' }}>{item}</div>
+                  </div>
+                ))}
+                <Link href="/builder">
+                  <button style={{ background: 'linear-gradient(135deg, #6c63ff, #a855f7)', color: 'white', padding: '12px 28px', borderRadius: '10px', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 700, marginTop: '16px' }}>
+                    Generate Cover Letter Free →
+                  </button>
+                </Link>
+              </div>
+
+              {/* Right - Cover Letter Preview */}
+              <div style={{ background: '#111118', border: '1px solid #1e1e30', borderRadius: '16px', padding: '24px', boxShadow: '0 0 40px #6c63ff11' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px', paddingBottom: '16px', borderBottom: '1px solid #1e1e30' }}>
+                  <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: 'linear-gradient(135deg, #6c63ff, #a855f7)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '16px' }}>✉️</div>
+                  <div>
+                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#e8e8f0' }}>AI Generated Cover Letter</div>
+                    <div style={{ fontSize: '11px', color: '#6c63ff' }}>Tailored for Software Engineer at Google</div>
+                  </div>
+                </div>
+
+                <div style={{ fontSize: '12px', color: '#888899', lineHeight: 1.8 }}>
+                  <p style={{ marginBottom: '10px', color: '#aaaacc' }}>Dear Hiring Manager,</p>
+                  <p style={{ marginBottom: '10px' }}>
+                    I am excited to apply for the Software Engineer position at <span style={{ color: '#6c63ff' }}>Google</span>. With 3+ years of experience building scalable applications using <span style={{ color: '#6c63ff' }}>Python and React</span>, I am confident I can contribute meaningfully to your engineering team.
+                  </p>
+                  <p style={{ marginBottom: '10px' }}>
+                    In my previous role at Tech Corp, I <span style={{ color: '#00d4aa' }}>reduced page load times by 40%</span> and led a team of 4 engineers to deliver a critical product feature ahead of schedule. I am particularly drawn to Google commitment to building products that impact billions of users.
+                  </p>
+                  <p style={{ marginBottom: '10px' }}>
+                    I would welcome the opportunity to discuss how my background aligns with your team goals.
+                  </p>
+                  <p style={{ color: '#aaaacc' }}>Sincerely,<br />John Smith</p>
+                </div>
+
+                <div style={{ marginTop: '16px', paddingTop: '16px', borderTop: '1px solid #1e1e30', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ fontSize: '11px', color: '#444466' }}>Generated in 8 seconds</div>
+                  <div style={{ fontSize: '11px', background: '#00d4aa22', border: '1px solid #00d4aa44', color: '#00d4aa', padding: '3px 10px', borderRadius: '999px', fontWeight: 600 }}>Ready to Send</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section style={{ padding: isMobile ? '60px 16px' : '100px 20px', background: '#0d0d15' }}>
           <div style={{ maxWidth: '800px', margin: '0 auto' }}>
