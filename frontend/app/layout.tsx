@@ -5,6 +5,10 @@ import Footer from '@/components/Footer'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
+  icons: {
+    icon: '/favicon.png',
+    apple: '/favicon.png',
+  },
   title: 'ResumeX AI — Free AI Resume Builder | ATS Optimized Resumes',
   description: 'Create professional ATS-optimized resumes in minutes using AI. Free resume builder with cover letter generator, ATS score checker and professional templates. Get hired faster.',
   keywords: 'AI resume builder, free resume builder, ATS resume, professional resume, resume maker, CV builder, cover letter generator',
