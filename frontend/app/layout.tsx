@@ -9,10 +9,6 @@ export const metadata: Metadata = {
     icon: '/favicon.png',
     apple: '/favicon.png',
   },
-  icons: {
-    icon: '/favicon.png',
-    apple: '/favicon.png',
-  },
   title: 'ResumeX AI — Free AI Resume Builder | ATS Optimized Resumes',
   description: 'Create professional ATS-optimized resumes in minutes using AI. Free resume builder with cover letter generator, ATS score checker and professional templates. Get hired faster.',
   keywords: 'AI resume builder, free resume builder, ATS resume, professional resume, resume maker, CV builder, cover letter generator',
@@ -26,10 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-1C43B9S5Y4"
-          strategy="afterInteractive"
-        />
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-1C43B9S5Y4" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
             window.dataLayer = window.dataLayer || [];
