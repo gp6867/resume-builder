@@ -61,12 +61,12 @@ export default function Pricing() {
       cta: 'Get Started Free', highlight: false, free: true
     },
     {
-      name: 'Pro', price: '$9', period: 'per month', color: '#6c63ff', amount: 75000,
+      name: 'Pro', price: '$9', period: 'per month', color: '#6c63ff', amount: 85500,
       features: ['Unlimited Resumes', 'All Templates', 'AI Cover Letters', 'Advanced ATS', 'Priority Support'],
       cta: 'Start Pro — $9/mo', highlight: true, free: false
     },
     {
-      name: 'Lifetime', price: '$49', period: 'one time', color: '#ff6584', amount: 408500,
+      name: 'Lifetime', price: '$49', period: 'one time', color: '#ff6584', amount: 465500,
       features: ['Everything in Pro', 'Lifetime Access', 'Future Updates', 'Commercial Use'],
       cta: 'Get Lifetime — $49', highlight: false, free: false
     }
