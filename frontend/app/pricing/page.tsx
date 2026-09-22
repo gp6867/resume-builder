@@ -3,50 +3,70 @@ import Navbar from '@/components/Navbar'
 import { useAuth } from '@/contexts/AuthContext'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import Script from 'next/script'
+
+declare global { interface Window { Razorpay: any } }
 
 export default function Pricing() {
   const { user } = useAuth()
   const router = useRouter()
   const [loading, setLoading] = useState<string | null>(null)
 
-  const handlePayment = async (plan: { name: string; price: string; free: boolean }) => {
+  const handlePayment = async (plan: { name: string; amount: number; free: boolean }) => {
     if (plan.free) { router.push('/builder'); return }
     if (!user) { router.push('/signup'); return }
 
     setLoading(plan.name)
+
     try {
+      // Create order
       const res = await fetch('https://resume-builder-1-jeiw.onrender.com/api/payment/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          plan_name: plan.name,
-          user_email: user.email,
-          user_id: user.id
-        })
+        body: JSON.stringify({ amount: plan.amount, plan_name: plan.name, user_id: user.id })
       })
       const data = await res.json()
-      if (data.session_url) {
-        window.location.href = data.session_url
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        order_id: data.order_id,
+        name: 'ResumeX AI',
+        description: `${plan.name} Plan`,
+        handler: function(response: any) {
+          alert(`Payment successful! ID: ${response.razorpay_payment_id}`)
+          router.push('/dashboard?payment=success')
+        },
+        prefill: {
+          name: user?.name || '',
+          email: user?.email || '',
+        },
+        theme: { color: '#6c63ff' },
+        modal: { ondismiss: () => setLoading(null) }
       }
-    } catch (e) {
-      alert('Payment failed. Please try again.')
+
+      const rzp = new window.Razorpay(options)
+      rzp.open()
+    } catch (e: any) {
+      alert('Payment failed: ' + e.message)
     }
     setLoading(null)
   }
 
   const plans = [
     {
-      name: 'Free', price: '$0', period: 'forever', color: '#888899',
+      name: 'Free', price: '$0', period: 'forever', color: '#888899', amount: 0,
       features: ['1 Resume', 'Basic Templates', 'PDF Download', 'ATS Score Check'],
       cta: 'Get Started Free', highlight: false, free: true
     },
     {
-      name: 'Pro', price: '$9', period: 'per month', color: '#6c63ff',
+      name: 'Pro', price: '$9', period: 'per month', color: '#6c63ff', amount: 75000,
       features: ['Unlimited Resumes', 'All Templates', 'AI Cover Letters', 'Advanced ATS', 'Priority Support'],
       cta: 'Start Pro — $9/mo', highlight: true, free: false
     },
     {
-      name: 'Lifetime', price: '$49', period: 'one time', color: '#ff6584',
+      name: 'Lifetime', price: '$49', period: 'one time', color: '#ff6584', amount: 408500,
       features: ['Everything in Pro', 'Lifetime Access', 'Future Updates', 'Commercial Use'],
       cta: 'Get Lifetime — $49', highlight: false, free: false
     }
@@ -54,12 +74,14 @@ export default function Pricing() {
 
   return (
     <>
+      <Script src="https://checkout.razorpay.com/v1/checkout.js" />
       <Navbar />
       <main style={{ padding: '80px 20px', maxWidth: '1000px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '60px' }}>
           <h1 style={{ fontSize: '48px', fontWeight: 900, marginBottom: '16px', color: '#e8e8f0' }}>Simple Pricing</h1>
           <p style={{ color: '#888899', fontSize: '18px' }}>Start free, upgrade when you need more</p>
         </div>
+
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
           {plans.map((plan) => (
             <div key={plan.name} style={{
@@ -69,11 +91,9 @@ export default function Pricing() {
               transform: plan.highlight ? 'scale(1.03)' : 'none'
             }}>
               {plan.highlight && (
-                <div style={{
-                  position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)',
-                  background: '#6c63ff', color: 'white', padding: '4px 16px',
-                  borderRadius: '999px', fontSize: '12px', fontWeight: 700
-                }}>MOST POPULAR</div>
+                <div style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', background: '#6c63ff', color: 'white', padding: '4px 16px', borderRadius: '999px', fontSize: '12px', fontWeight: 700 }}>
+                  MOST POPULAR
+                </div>
               )}
               <div style={{ color: plan.color, fontSize: '13px', fontWeight: 700, marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '1px' }}>{plan.name}</div>
               <div style={{ fontSize: '44px', fontWeight: 900, marginBottom: '4px', color: '#e8e8f0' }}>{plan.price}</div>
@@ -101,8 +121,9 @@ export default function Pricing() {
             </div>
           ))}
         </div>
+
         <div style={{ textAlign: 'center', marginTop: '48px', color: '#888899', fontSize: '14px' }}>
-          Secure payment by Stripe — Cancel anytime — 7-day money back guarantee
+          Secure payment by Razorpay — Cancel anytime — 7-day money back guarantee
         </div>
       </main>
     </>
