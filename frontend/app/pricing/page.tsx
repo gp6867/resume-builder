@@ -19,7 +19,6 @@ export default function Pricing() {
     setLoading(plan.name)
 
     try {
-      // Create order
       const res = await fetch('https://resume-builder-1-jeiw.onrender.com/api/payment/create-order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -34,14 +33,29 @@ export default function Pricing() {
         order_id: data.order_id,
         name: 'ResumeX AI',
         description: `${plan.name} Plan`,
-        handler: function(response: any) {
-          alert(`Payment successful! ID: ${response.razorpay_payment_id}`)
-          router.push('/dashboard?payment=success')
+        handler: async function(response: any) {
+          // Verify payment
+          const verifyRes = await fetch('https://resume-builder-1-jeiw.onrender.com/api/payment/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_signature: response.razorpay_signature,
+              user_id: user?.id,
+              plan: plan.name.toLowerCase()
+            })
+          })
+          const verifyData = await verifyRes.json()
+          if (verifyData.success) {
+            // Update local user
+            const updatedUser = { ...user, plan: plan.name.toLowerCase() }
+            localStorage.setItem('user', JSON.stringify(updatedUser))
+            alert('Payment successful! Your plan has been upgraded.')
+            router.push('/dashboard')
+          }
         },
-        prefill: {
-          name: user?.name || '',
-          email: user?.email || '',
-        },
+        prefill: { name: user?.name || '', email: user?.email || '' },
         theme: { color: '#6c63ff' },
         modal: { ondismiss: () => setLoading(null) }
       }
