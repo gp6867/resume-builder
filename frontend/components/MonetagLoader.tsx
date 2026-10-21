@@ -8,8 +8,12 @@ const ZONE = '299433'
 const SKIP = ['/login', '/signup', '/forgot-password', '/reset-password', '/auth', '/pricing']
 const VISIBLE_MS = 20000
 
-function randomMs(minSec: number, maxSec: number) {
-  return (minSec + Math.random() * (maxSec - minSec)) * 1000
+function delaySeconds(pathname: string) {
+  if (pathname === '/') return 15
+  if (pathname.startsWith('/blog')) return 0
+  if (pathname.startsWith('/dashboard')) return 10
+  if (pathname.startsWith('/builder')) return 10
+  return 20
 }
 
 export default function MonetagLoader() {
@@ -22,7 +26,6 @@ export default function MonetagLoader() {
     if (plan && plan !== 'free') return
     if (SKIP.some(p => pathname === p || pathname.startsWith(p + '/'))) return
 
-    const [min, max] = pathname === '/' ? [30, 60] : [60, 90]
     let script: HTMLScriptElement | null = null
     let removeTimer: ReturnType<typeof setTimeout> | undefined
 
@@ -37,7 +40,7 @@ export default function MonetagLoader() {
         script?.remove()
         script = null
       }, VISIBLE_MS)
-    }, randomMs(min, max))
+    }, delaySeconds(pathname) * 1000)
 
     return () => {
       clearTimeout(showTimer)
