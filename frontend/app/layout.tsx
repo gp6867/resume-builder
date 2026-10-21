@@ -19,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <meta name="monetag" content="1ba9939b0547a9db26e4e5c0ea534413" />
         <link rel="apple-touch-icon" href="/favicon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6781371000162550" crossOrigin="anonymous"></script>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-1C43B9S5Y4" strategy="afterInteractive" />
