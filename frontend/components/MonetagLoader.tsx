@@ -9,11 +9,11 @@ const SKIP = ['/login', '/signup', '/forgot-password', '/reset-password', '/auth
 const VISIBLE_MS = 20000
 
 function delaySeconds(pathname: string) {
-  if (pathname === '/') return 15
+  if (pathname === '/') return 0
   if (pathname.startsWith('/blog')) return 0
-  if (pathname.startsWith('/dashboard')) return 10
-  if (pathname.startsWith('/builder')) return 10
-  return 20
+  if (pathname.startsWith('/dashboard')) return 0
+  if (pathname.startsWith('/builder')) return 0
+  return 0
 }
 
 export default function MonetagLoader() {
