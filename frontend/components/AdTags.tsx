@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useAuth } from '@/contexts/AuthContext'
 
 // Pages where no ad should ever load
-const SKIP = ['/login', '/signup', '/forgot-password', '/reset-password', '/auth', '/pricing']
+const SKIP = ['/login', '/signup', '/forgot-password', '/reset-password', '/auth', '/pricing', '/blog']
 
 // Seconds to wait after page load before the tags are added
 const DELAY_SECONDS = 0

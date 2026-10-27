@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
+import BlogAds from '@/components/BlogAds'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -70,6 +71,8 @@ export default function ATSGuide() {
 
           <h2 style={h2}>Use an AI Resume Builder to Do This Automatically</h2>
           <p style={p}>Writing an ATS-optimized resume from scratch is time-consuming. Our free AI resume builder does it for you automatically. You enter your details, and Claude AI writes a complete, ATS-optimized resume with the right keywords, formatting, and bullet points — in under 60 seconds.</p>
+
+          <BlogAds />
 
           <div style={{ background: 'linear-gradient(135deg, #1a1040, #0a0a1f)', border: '1px solid #6c63ff33', borderRadius: '16px', padding: '32px', textAlign: 'center', marginTop: '48px' }}>
             <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#e8e8f0', marginBottom: '12px' }}>Build Your ATS Resume Free</h3>

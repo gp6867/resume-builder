@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
+import BlogAds from '@/components/BlogAds'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -57,6 +58,8 @@ export default function AIGuide() {
           <h2 style={h2}>AI Resume Builder vs Traditional Resume Builder</h2>
           <p style={p}>Traditional resume builders give you a template and make you write all the content yourself. AI resume builders write the content for you — you just provide the raw information and the AI transforms it into professional resume language.</p>
           <p style={p}>ResumeX AI goes further by also checking your ATS compatibility score and generating a personalized cover letter — features that traditional resume builders simply cannot offer.</p>
+
+          <BlogAds />
 
           <div style={{ background: 'linear-gradient(135deg, #1a1040, #0a0a1f)', border: '1px solid #6c63ff33', borderRadius: '16px', padding: '32px', textAlign: 'center', marginTop: '48px' }}>
             <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#e8e8f0', marginBottom: '12px' }}>Try the Best Free AI Resume Builder</h3>
