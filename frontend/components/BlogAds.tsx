@@ -7,14 +7,14 @@ const BANNER_HTML = `<!DOCTYPE html>
 <body>
 <script>
   atOptions = {
-    'key' : 'd418cd9ab42db71af10006d11c8c67f3',
+    'key' : '4f2835e99258a6a6624e1772521345b1',
     'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
+    'height' : 250,
+    'width' : 300,
     'params' : {}
   };
 <\/script>
-<script src="https://bauval.org/22/d418cd9ab42db71af10006d11c8c67f3"><\/script>
+<script src="https://bauval.org/22/4f2835e99258a6a6624e1772521345b1"><\/script>
 </body></html>`
 
 const SOCIAL_BAR_SRC = 'https://bauval.org/14/0b12c9c36d93569bc372acbfc68697f1'
@@ -39,8 +39,8 @@ export default function BlogAds() {
     <div style={{ display: 'flex', justifyContent: 'center', margin: '40px 0', overflowX: 'auto' }}>
       <iframe
         srcDoc={BANNER_HTML}
-        width={468}
-        height={60}
+        width={300}
+        height={250}
         scrolling="no"
         title="Advertisement"
         style={{ border: 'none', maxWidth: '100%' }}
