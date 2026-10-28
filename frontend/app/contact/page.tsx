@@ -1,5 +1,6 @@
 'use client'
 import Navbar from '@/components/Navbar'
+import AdBanner from '@/components/AdBanner'
 
 export default function Contact() {
   return (
@@ -24,6 +25,7 @@ export default function Contact() {
             </div>
           ))}
         </div>
+        <AdBanner />
       </main>
     </>
   )

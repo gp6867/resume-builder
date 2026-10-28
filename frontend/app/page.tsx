@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
+import AdBanner from '@/components/AdBanner'
 import Script from 'next/script'
 import { useState, useEffect } from 'react'
 
@@ -418,6 +419,8 @@ export default function Home() {
             ))}
           </div>
         </section>
+
+        <AdBanner />
 
         {/* CTA */}
         <section style={{ textAlign: 'center', padding: isMobile ? '60px 16px' : '100px 20px', background: 'radial-gradient(ellipse 80% 60% at 50% 100%, #1a0a4a 0%, #0a0a0f 70%)', position: 'relative', overflow: 'hidden' }}>

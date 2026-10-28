@@ -1,5 +1,4 @@
 'use client'
-import { useEffect } from 'react'
 import { useAuth } from '@/contexts/AuthContext'
 
 const BANNER_HTML = `<!DOCTYPE html>
@@ -17,26 +16,14 @@ const BANNER_HTML = `<!DOCTYPE html>
 <script src="https://bauval.org/22/4f2835e99258a6a6624e1772521345b1"><\/script>
 </body></html>`
 
-const SOCIAL_BAR_SRC = 'https://bauval.org/14/0b12c9c36d93569bc372acbfc68697f1'
-
-export default function BlogAds() {
+export default function AdBanner() {
   const { user, loading } = useAuth()
   const showAds = !loading && (!user?.plan || user.plan === 'free')
-
-  useEffect(() => {
-    if (!showAds) return
-    const s = document.createElement('script')
-    s.src = SOCIAL_BAR_SRC
-    s.async = true
-    s.setAttribute('data-cfasync', 'false')
-    document.body.appendChild(s)
-    return () => { s.remove() }
-  }, [showAds])
 
   if (!showAds) return null
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', margin: '40px 0', overflowX: 'auto' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', margin: '40px 0' }}>
       <iframe
         srcDoc={BANNER_HTML}
         width={300}

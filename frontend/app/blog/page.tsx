@@ -1,7 +1,7 @@
 'use client'
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
-import BlogAds from '@/components/BlogAds'
+import AdBanner from '@/components/AdBanner'
 
 const posts = [
   {
@@ -72,7 +72,7 @@ export default function Blog() {
             ))}
           </div>
 
-          <BlogAds />
+          <AdBanner />
 
           <div style={{ marginTop: '80px', background: 'linear-gradient(135deg, #1a1040, #0a0a1f)', border: '1px solid #6c63ff33', borderRadius: '16px', padding: '40px', textAlign: 'center' }}>
             <h3 style={{ fontSize: '24px', fontWeight: 800, color: '#e8e8f0', marginBottom: '12px' }}>Ready to build your resume?</h3>

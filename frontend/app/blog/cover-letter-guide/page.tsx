@@ -1,6 +1,6 @@
 import Navbar from '@/components/Navbar'
 import Link from 'next/link'
-import BlogAds from '@/components/BlogAds'
+import AdBanner from '@/components/AdBanner'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -65,7 +65,7 @@ export default function CoverLetterGuide() {
           <h2 style={h2}>Use AI to Write Your Cover Letter</h2>
           <p style={p}>Writing a tailored cover letter for every job is time-consuming. ResumeX AI generates a personalized cover letter in seconds — you just paste the job description and the AI writes a tailored letter based on your resume and the specific role.</p>
 
-          <BlogAds />
+          <AdBanner />
 
           <div style={{ background: 'linear-gradient(135deg, #1a1040, #0a0a1f)', border: '1px solid #6c63ff33', borderRadius: '16px', padding: '32px', textAlign: 'center', marginTop: '48px' }}>
             <h3 style={{ fontSize: '22px', fontWeight: 800, color: '#e8e8f0', marginBottom: '12px' }}>Generate Your Cover Letter with AI</h3>
