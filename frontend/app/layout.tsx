@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
 import Footer from '@/components/Footer'
-import AdsterraSocialBar from '@/components/AdsterraSocialBar'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
@@ -36,7 +35,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           {children}
           <Footer />
-          <AdsterraSocialBar />
         </AuthProvider>
       </body>
     </html>

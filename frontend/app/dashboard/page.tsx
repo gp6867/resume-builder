@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useAuth } from '@/contexts/AuthContext'
 import Navbar from '@/components/Navbar'
-import AdBanner from '@/components/AdBanner'
 import axios from 'axios'
 
 const API = axios.create({ baseURL: 'https://resume-builder-1-jeiw.onrender.com' })
@@ -153,7 +152,6 @@ export default function Dashboard() {
           </div>
         )}
 
-        <AdBanner />
 
         {/* Quick Actions */}
         <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#e8e8f0', marginBottom: '20px' }}>Quick Actions</h2>

@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
-import AdBanner from '@/components/AdBanner'
 import Script from 'next/script'
 import { useState, useEffect } from 'react'
 
@@ -13,7 +12,6 @@ const schema = {
   "description": "Free AI resume builder that creates professional ATS-optimized resumes in minutes using Claude AI",
   "url": "https://resumex-ai.com",
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-  "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "2847" }
 }
 
 const ROLES = ['Software Engineer', 'Product Manager', 'Data Scientist', 'UX Designer', 'Marketing Manager', 'DevOps Engineer', 'Business Analyst', 'Full Stack Developer']
@@ -164,7 +162,7 @@ export default function Home() {
           </div>
 
           <div style={{ display: 'flex', gap: isMobile ? '24px' : '40px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            {[{ num: '50,000+', label: 'Resumes Created' }, { num: '94%', label: 'ATS Pass Rate' }, { num: '60 sec', label: 'Build Time' }, { num: '4.9★', label: 'User Rating' }].map(s => (
+            {[{ num: '60 sec', label: 'Typical build time' }, { num: 'ATS', label: 'Score with every resume' }, { num: 'Free', label: 'To start, no card' }].map(s => (
               <div key={s.label} style={{ textAlign: 'center' }}>
                 <div style={{ fontSize: isMobile ? '20px' : '26px', fontWeight: 800, color: '#e8e8f0' }}>{s.num}</div>
                 <div style={{ fontSize: '11px', color: '#666688', marginTop: '4px' }}>{s.label}</div>
@@ -420,7 +418,6 @@ export default function Home() {
           </div>
         </section>
 
-        <AdBanner />
 
         {/* CTA */}
         <section style={{ textAlign: 'center', padding: isMobile ? '60px 16px' : '100px 20px', background: 'radial-gradient(ellipse 80% 60% at 50% 100%, #1a0a4a 0%, #0a0a0f 70%)', position: 'relative', overflow: 'hidden' }}>
@@ -429,7 +426,7 @@ export default function Home() {
             Your next interview<br />starts with a better resume.
           </h2>
           <p style={{ color: '#9999bb', fontSize: '16px', marginBottom: '36px', maxWidth: '480px', margin: '0 auto 36px' }}>
-            Join thousands of job seekers using our free AI resume builder. Takes 60 seconds. No credit card needed.
+            Try our free AI resume builder. Takes 60 seconds. No credit card needed.
           </p>
           <Link href="/signup">
             <button style={{ background: 'linear-gradient(135deg, #6c63ff, #a855f7)', color: 'white', padding: isMobile ? '16px 36px' : '18px 56px', borderRadius: '12px', border: 'none', cursor: 'pointer', fontSize: isMobile ? '16px' : '18px', fontWeight: 700, boxShadow: '0 0 60px #6c63ff44' }}>
