@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { AuthProvider } from '@/contexts/AuthContext'
 import Footer from '@/components/Footer'
-import PushTag from '@/components/PushTag'
 import Script from 'next/script'
 
 export const metadata: Metadata = {
@@ -20,6 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
+        <script src="https://5gvci.com/act/files/tag.min.js?z=12304803" data-cfasync="false" async></script>
         <link rel="apple-touch-icon" href="/favicon.png" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6781371000162550" crossOrigin="anonymous"></script>
         <Script src="https://www.googletagmanager.com/gtag/js?id=G-1C43B9S5Y4" strategy="afterInteractive" />
@@ -36,7 +36,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthProvider>
           {children}
           <Footer />
-          <PushTag />
         </AuthProvider>
       </body>
     </html>
